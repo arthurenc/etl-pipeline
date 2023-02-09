@@ -1,0 +1,110 @@
+[debug] > Exec(early(addDefaultCommands), None, None)
+[debug] > Exec(addDefaultCommands, None, None)
+[debug] > Exec(early(initialize), None, None)
+[debug] > Exec(initialize, None, None)
+[debug] > Exec(boot, None, None)
+[debug] > Exec(writeSbtVersion, None, None)
+[debug] > Exec(reload, None, None)
+[debug] > Exec(sbtStashOnFailure, None, None)
+[debug] > Exec(onFailure loadFailed, None, None)
+[debug] > Exec(loadp, None, None)
+[info] welcome to sbt 1.8.2 (Oracle Corporation Java 1.8.0_311)
+[debug]       Load.loadUnit: plugins took 139.046167ms
+[debug]       Load.loadUnit: defsScala took 1.632083ms
+[debug] [Loading] Scanning directory /Users/ACL53/.sbt/1.0/plugins
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in /Users/ACL53/.sbt/1.0/plugins, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 35.340083 ms
+[debug]           Load.resolveProject(global-plugins) took 76.983125ms
+[debug]         Load.loadTransitive: finalizeProject(Project(id global-plugins, base: /Users/ACL53/.sbt/1.0/plugins, plugins: List(<none>))) took 149.329375ms
+[debug] [Loading] Done in /Users/ACL53/.sbt/1.0/plugins, returning: (global-plugins)
+[debug]       Load.loadUnit: loadedProjectsRaw took 208.597917ms
+[debug]       Load.loadUnit: cleanEvalClasses took 0.344209ms
+[debug]     Load.loadUnit(file:/Users/ACL53/.sbt/1.0/plugins/, ...) took 377.623542ms
+[debug]   Load.apply: load took 896.522458ms
+[debug]   Load.apply: resolveProjects took 5.062583ms
+[debug]   Load.apply: finalTransforms took 103.869917ms
+[debug]   Load.apply: config.delegates took 8.195625ms
+[debug]   Load.apply: Def.make(settings)... took 1271.764125ms
+[debug]   Load.apply: structureIndex took 234.164416ms
+[debug]   Load.apply: mkStreams took 1.437583ms
+[info] loading global plugins from /Users/ACL53/.sbt/1.0/plugins
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[debug] Load.defaultLoad until apply took 4300.454083ms
+[debug]           Load.loadUnit: plugins took 36.780375ms
+[debug]           Load.loadUnit: defsScala took 0.002917ms
+[debug] [Loading] Scanning directory /Users/ACL53/Documents/GitHub/etl-pipeline/project
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in /Users/ACL53/Documents/GitHub/etl-pipeline/project, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 7.522708 ms
+[debug]               Load.resolveProject(etl-pipeline-build) took 7.565958ms
+[debug]             Load.loadTransitive: finalizeProject(Project(id etl-pipeline-build, base: /Users/ACL53/Documents/GitHub/etl-pipeline/project, plugins: List(<none>))) took 18.985583ms
+[debug] [Loading] Done in /Users/ACL53/Documents/GitHub/etl-pipeline/project, returning: (etl-pipeline-build)
+[debug]           Load.loadUnit: loadedProjectsRaw took 35.748ms
+[debug]           Load.loadUnit: cleanEvalClasses took 0.048583ms
+[debug]         Load.loadUnit(file:/Users/ACL53/Documents/GitHub/etl-pipeline/project/, ...) took 75.418333ms
+[debug]       Load.apply: load took 81.369958ms
+[debug]       Load.apply: resolveProjects took 0.924875ms
+[debug]       Load.apply: finalTransforms took 69.240042ms
+[debug]       Load.apply: config.delegates took 4.036ms
+[debug]       Load.apply: Def.make(settings)... took 533.338125ms
+[debug]       Load.apply: structureIndex took 81.141833ms
+[debug]       Load.apply: mkStreams took 0.002625ms
+[info] loading project definition from /Users/ACL53/Documents/GitHub/etl-pipeline/project
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[debug]     Load.loadUnit: plugins took 2424.433791ms
+[debug]     Load.loadUnit: defsScala took 0.002792ms
+[debug] [Loading] Scanning directory /Users/ACL53/Documents/GitHub/etl-pipeline
+[debug]       Load.loadUnit: mkEval took 8.270375ms
+[debug] [Loading] Found root project root w/ remaining 
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 4.035667 ms
+[info] loading settings for project root from build.sbt ...
+[debug]         Load.resolveProject(root) took 9.214625ms
+[debug]       Load.loadTransitive: finalizeProject(Project(id root, base: /Users/ACL53/Documents/GitHub/etl-pipeline, plugins: List(<none>))) took 15.655458ms
+[debug] [Loading] Done in /Users/ACL53/Documents/GitHub/etl-pipeline, returning: (root)
+[debug]     Load.loadUnit: loadedProjectsRaw took 225.904667ms
+[debug]     Load.loadUnit: cleanEvalClasses took 15.823125ms
+[debug]   Load.loadUnit(file:/Users/ACL53/Documents/GitHub/etl-pipeline/, ...) took 2668.058084ms
+[debug] Load.apply: load took 2675.363834ms
+[debug] Load.apply: resolveProjects took 0.275125ms
+[debug] Load.apply: finalTransforms took 18.731917ms
+[debug] Load.apply: config.delegates took 1.905583ms
