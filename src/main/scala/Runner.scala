@@ -11,16 +11,21 @@ object Runner extends App {
 
   val path = s"$filePath/$fileName"
 
-  val (origin: Origin[_], destination: Destination[_]) = dataType match {
-    case "String" => (new stringOrigin, new stringDestination)
+  dataType match {
+    case "String" =>
+      val (origin, destination) = (new stringOrigin, new stringDestination)
+      val input = origin.extract(path)
+      val cleaned =  origin.clean(input)
+      val transformed = destination.transform(cleaned)
+      destination.save(fileName, transformed)
     case "IntList" => (new intListOrigin, new intListDestination)
-    case _ => (new stringOrigin, new stringDestination)
+      val (origin, destination) = (new stringOrigin, new stringDestination)
+      val input = origin.extract(path)
+      val cleaned =  origin.clean(input)
+      val transformed = destination.transform(cleaned)
+      destination.save(fileName, transformed)
+    case _ => new Throwable("Unknown data type")
   }
-
-  val input = origin.extract(path)
-  val cleaned =  origin.clean(input)
-  val transformed = destination.transform(cleaned)
-  destination.save(fileName, transformed)
 }
 
 case class stringOrigin() extends Origin[String] {
@@ -36,13 +41,13 @@ case class intListOrigin() extends Origin[List[Int]] {
 
 case class stringDestination() extends Destination[String] {
   def save(filename: String, data: String): Unit =
-    new PrintWriter(s"/Users/ACL53/Documents/scala-projects/etl-pipeline/src/main/resources/output/$filename") { write(data); close }
+    new PrintWriter(s"./src/main/resources/output/$filename") { write(data); close }
   def transform(input: String): String = input.toLowerCase
 }
 
 case class intListDestination() extends Destination[List[Int]] {
   def save(filename: String, data: List[Int]): Unit =
-    new PrintWriter(s"/Users/ACL53/Documents/scala-projects/etl-pipeline/src/main/resources/output/$filename") { write(data.mkString); close }
+    new PrintWriter(s"./src/main/resources/output/$filename") { write(data.mkString); close }
   def transform(input: List[Int]): List[Int] = input.reverse
 }
 
