@@ -12,51 +12,34 @@ object Runner extends App {
   val path = s"$filePath/$fileName"
 
   val (origin, destination) = dataType match {
-    case "String" => (new stringOrigin, new stringDestination)
-    case "IntList" => (new intListOrigin, new intListDestination)
-    case _ => new Throwable("Unknown data type")
+    case "String" => (StringOrigin, StringDestination)
+    case "IntList" => (IntListOrigin, IntListDestination)
   }
 
   val input = origin.extract(path)
   val cleaned =  origin.clean(input)
   val transformed = destination.transform(cleaned)
   destination.save(fileName, transformed)
-
-//  dataType match {
-//    case "String" =>
-//      val (origin, destination) = (new stringOrigin, new stringDestination)
-//      val input = origin.extract(path)
-//      val cleaned =  origin.clean(input)
-//      val transformed = destination.transform(cleaned)
-//      destination.save(fileName, transformed)
-//    case "IntList" => (new intListOrigin, new intListDestination)
-//      val (origin, destination) = (new stringOrigin, new stringDestination)
-//      val input = origin.extract(path)
-//      val cleaned =  origin.clean(input)
-//      val transformed = destination.transform(cleaned)
-//      destination.save(fileName, transformed)
-//    case _ => new Throwable("Unknown data type")
-//  }
 }
 
-case class stringOrigin() extends Origin[String] {
+case object StringOrigin extends Origin[String] {
   def extract(path: String): String = Source.fromFile(path).mkString
   def clean(input: String): String = input.replace(";", "")
 }
 
-case class intListOrigin() extends Origin[List[Int]] {
+case object IntListOrigin extends Origin[List[Int]] {
   def extract(path: String): List[Int] =
     Source.fromFile(path).getLines.foldRight(List[Int]())((currentLine, list) => currentLine.toInt :: list)
   def clean(input: List[Int]): List[Int] = input.filter(_%2 == 0)
 }
 
-case class stringDestination() extends Destination[String] {
+case object StringDestination extends Destination[String] {
   def save(filename: String, data: String): Unit =
     new PrintWriter(s"./src/main/resources/output/$filename") { write(data); close }
   def transform(input: String): String = input.toLowerCase
 }
 
-case class intListDestination() extends Destination[List[Int]] {
+case object IntListDestination extends Destination[List[Int]] {
   def save(filename: String, data: List[Int]): Unit =
     new PrintWriter(s"./src/main/resources/output/$filename") { write(data.mkString); close }
   def transform(input: List[Int]): List[Int] = input.reverse
