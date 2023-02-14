@@ -11,21 +11,32 @@ object Runner extends App {
 
   val path = s"$filePath/$fileName"
 
-  dataType match {
-    case "String" =>
-      val (origin, destination) = (new stringOrigin, new stringDestination)
-      val input = origin.extract(path)
-      val cleaned =  origin.clean(input)
-      val transformed = destination.transform(cleaned)
-      destination.save(fileName, transformed)
+  val (origin, destination) = dataType match {
+    case "String" => (new stringOrigin, new stringDestination)
     case "IntList" => (new intListOrigin, new intListDestination)
-      val (origin, destination) = (new stringOrigin, new stringDestination)
-      val input = origin.extract(path)
-      val cleaned =  origin.clean(input)
-      val transformed = destination.transform(cleaned)
-      destination.save(fileName, transformed)
     case _ => new Throwable("Unknown data type")
   }
+
+  val input = origin.extract(path)
+  val cleaned =  origin.clean(input)
+  val transformed = destination.transform(cleaned)
+  destination.save(fileName, transformed)
+
+//  dataType match {
+//    case "String" =>
+//      val (origin, destination) = (new stringOrigin, new stringDestination)
+//      val input = origin.extract(path)
+//      val cleaned =  origin.clean(input)
+//      val transformed = destination.transform(cleaned)
+//      destination.save(fileName, transformed)
+//    case "IntList" => (new intListOrigin, new intListDestination)
+//      val (origin, destination) = (new stringOrigin, new stringDestination)
+//      val input = origin.extract(path)
+//      val cleaned =  origin.clean(input)
+//      val transformed = destination.transform(cleaned)
+//      destination.save(fileName, transformed)
+//    case _ => new Throwable("Unknown data type")
+//  }
 }
 
 case class stringOrigin() extends Origin[String] {

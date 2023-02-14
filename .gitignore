@@ -1,20 +1,3 @@
 /.idea/
-*.iml
 
 /.bsp/
-
-**/target/
-
-.DS_Store
-
-/.vscode/
-.bloop
-.metals
-metals.sbt
-/project/.bloop/
-**/results/
-
-**/build/
-
-data-dictionary/src/main/resources/test-features/cli/*.avro
-entity-smart-actors/src/cli/resources/examples/inputs/*.avro
