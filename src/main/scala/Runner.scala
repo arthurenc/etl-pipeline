@@ -12,8 +12,8 @@ object Runner extends App {
   val path = s"$filePath/$fileName"
 
   val (origin, destination) = dataType match {
-    case "String" => (StringOrigin, StringDestination)
-    case "IntList" => (IntListOrigin, IntListDestination)
+    case DataType.String.name => (StringOrigin, StringDestination)
+    case DataType.IntList.name => (IntListOrigin, IntListDestination)
   }
 
   val input = origin.extract(path)
