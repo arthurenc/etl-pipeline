@@ -16,3 +16,9 @@ case object IntListDestination extends Destination[List[Int]] {
     new PrintWriter(s"./src/main/resources/output/$filename") { write(data.mkString); close }
   def transform(input: List[Int]): List[Int] = input.reverse
 }
+
+case object JsonDestination extends Destination[String] {
+  def save(filename: String, data: String): Unit =
+    new PrintWriter(s"./src/main/resources/output/$filename") { write(data); close }
+  def transform(input: String): String = input.toLowerCase
+}
