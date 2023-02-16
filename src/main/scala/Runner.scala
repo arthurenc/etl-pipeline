@@ -11,15 +11,20 @@ object Runner extends App {
 
   val path = s"$filePath/$fileName"
 
-  val (origin, destination) = dataType match {
-    case DataType.String.name => (StringOrigin, StringDestination)
-    case DataType.IntList.name => (IntListOrigin, IntListDestination)
+  dataType match {
+    case "String" =>
+      val (origin, destination) = (StringOrigin, StringDestination)
+      val input = origin.extract(path)
+      val cleaned =  origin.clean(input)
+      val transformed = destination.transform(cleaned)
+      destination.save(fileName, transformed)
+    case "IntList" =>
+      val (origin, destination) = (IntListOrigin, IntListDestination)
+      val input = origin.extract(path)
+      val cleaned =  origin.clean(input)
+      val transformed = destination.transform(cleaned)
+      destination.save(fileName, transformed)
   }
-
-  val input = origin.extract(path)
-  val cleaned =  origin.clean(input)
-  val transformed = destination.transform(cleaned)
-  destination.save(fileName, transformed)
 }
 
 case object StringOrigin extends Origin[String] {
