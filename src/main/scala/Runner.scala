@@ -1,5 +1,6 @@
 import pureconfig._
 import pureconfig.generic.auto._
+import io.circe.Json
 
 object Runner extends App {
   lazy val conf = ConfigSource.default.load[ServiceConf]
@@ -13,6 +14,10 @@ object Runner extends App {
     case "IntList" => new Runner[List[Int]] {
       val origin = IntListOrigin
       val destination = IntListDestination
+    }
+    case "Json" => new Runner[Json] {
+      val origin = JsonOrigin
+      val destination = JsonDestination
     }
   }
   runner.run()
