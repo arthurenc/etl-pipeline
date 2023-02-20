@@ -1,6 +1,9 @@
-import java.io.PrintWriter
-import io.circe.{Decoder, Encoder, Json}
+package destination
+
 import io.circe.syntax._
+import io.circe.{Decoder, Encoder, Json}
+
+import java.io.PrintWriter
 
 trait Destination[T] {
   def save(filename: String, data: T): Unit

@@ -1,6 +1,8 @@
+import destination.{Destination, IntListDestination, JsonDestination, StringDestination}
 import pureconfig._
 import pureconfig.generic.auto._
 import io.circe.Json
+import origin.{IntListOrigin, JsonOrigin, Origin, StringOrigin}
 
 object Runner extends App {
   lazy val conf = ConfigSource.default.load[ServiceConf]

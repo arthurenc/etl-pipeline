@@ -1,5 +1,8 @@
-import scala.io.Source
+package origin
+
 import io.circe.{HCursor, Json, parser}
+
+import scala.io.Source
 
 trait Origin[T] {
   def extract(path: String): T

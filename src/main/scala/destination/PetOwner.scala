@@ -1,3 +1,5 @@
+package destination
+
 case class PetOwner(
   id: Int,
   owner: Owner,
