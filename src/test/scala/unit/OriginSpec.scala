@@ -3,77 +3,68 @@ package unit
 import org.scalatest.flatspec.AnyFlatSpec
 import origin.{IntListOrigin, JsonOrigin, StringOrigin}
 import org.scalatest.BeforeAndAfter
-import io.circe.{Json, parser}
+import io.circe.{Json, ParsingFailure, parser}
+
 import scala.reflect.io.Directory
 import java.nio.file.{Files, Paths}
 import java.io.{FileNotFoundException, PrintWriter}
 
-class OriginSpec extends AnyFlatSpec with BeforeAndAfter  {
+class OriginSpec extends AnyFlatSpec with BeforeAndAfter {
 
-  "StringOrigin.extract" should "return a file from a dir as a String" in new OriginFixture {
-    val file = StringOrigin.extract(path+stringFileName)
-    assert(file == stringFile)
-  }
-
-  it should "return a FileNotFoundException if the file does not exist in the dir" in new OriginFixture {
+  "Origin.openFile" should "throw a FileNotFoundException if the file does not exist" in new OriginFixture {
     assertThrows[FileNotFoundException]{
-      StringOrigin.extract(path+fakeFileName)
+      StringOrigin.openFile(path+invalidFile)
     }
   }
 
-  "StringOrigin.clean" should "remove semicolons from the string file" in new OriginFixture {
-    val file = StringOrigin.extract(path+stringFileName)
+  "StringOrigin.extract" should "return a file as a string" in new OriginFixture {
+    val file = StringOrigin.extract(path+stringFile)
+    assert(file == string)
+  }
+
+  "StringOrigin.clean" should "remove semicolons from a string" in new OriginFixture {
+    val file = StringOrigin.extract(path+stringFile)
     val cleanedFile = StringOrigin.clean(file)
-    assert(cleanedFile == cleanedStringFile)
+    assert(cleanedFile == cleanedString)
   }
 
-  "IntListOrigin.extract" should "return a file from a dir as a List of Integers" in new OriginFixture {
-    val file = IntListOrigin.extract(path+intListFileName)
-    assert(file == intListFile)
+  "IntListOrigin.extract" should "return a file as a list of integers" in new OriginFixture {
+    val file = IntListOrigin.extract(path+intListFile)
+    assert(file == intList)
   }
 
-  it should "return a FileNotFoundException if the file does not exist in the dir" in new OriginFixture {
-    assertThrows[FileNotFoundException]{
-      IntListOrigin.extract(path+fakeFileName)
+  "IntListOrigin.clean" should "remove semicolons from a list of integers" in new OriginFixture {
+    val file = IntListOrigin.extract(path+intListFile)
+    val cleanedFile = IntListOrigin.clean(file)
+    assert(cleanedFile == cleanedIntList)
+  }
+
+  "JsonOrigin.extract" should "return a file as a Json" in new OriginFixture {
+    val file = JsonOrigin.extract(path+jsonFile)
+    val decerializedJson: Json = parser.parse(json).getOrElse(Json.Null)
+    assert(file == decerializedJson)
+  }
+
+  it should "throw a ParsingFailure if the file cannot be converted to Json" in new OriginFixture {
+    assertThrows[ParsingFailure]{
+      JsonOrigin.extract(path+invalidJsonFile)
     }
   }
 
-  "IntListOrigin.clean" should "remove semicolons from the string file" in new OriginFixture {
-    val file = IntListOrigin.extract(path+intListFileName)
-    val cleanedFile = IntListOrigin.clean(file)
-    assert(cleanedFile == cleanedIntListFile)
-  }
-
-  "JsonOrigin.extract" should "return a file from a dir as a Json" in new OriginFixture {
-    val file = JsonOrigin.extract(path+jsonFileName)
-    assert(file == jsonFile)
-  }
-
-  it should "return a FileNotFoundException if the file does not exist in the dir" in new OriginFixture {
-    assertThrows[FileNotFoundException]{
-      IntListOrigin.extract(path+fakeFileName)
-    }
-  }
-
-  it should "return a empty Json if the Json is invalid" in new OriginFixture {
-    val file = JsonOrigin.extract(path+invalidJsonFileName)
-    assert(file == Json.Null)
-  }
-
-  "JsonOrigin.clean" should "remove semicolons from the string file" in new OriginFixture {
-    val file = IntListOrigin.extract(path+intListFileName)
-    val cleanedFile = IntListOrigin.clean(file)
-    assert(cleanedFile == cleanedIntListFile)
+  "JsonOrigin.clean" should "remove the data wrapper from a Json" in new OriginFixture {
+    val file = JsonOrigin.extract(path+jsonFile)
+    val cleanedFile = JsonOrigin.clean(file)
+    assert(cleanedFile == cleanedJson)
   }
 
   before {
     new OriginFixture {
       val dirPath = Paths.get(path)
       if(!(Files.exists(dirPath) && Files.isDirectory(dirPath))) Files.createDirectory(dirPath)
-      new PrintWriter(path+stringFileName) { write(stringFile); close }
-      new PrintWriter(path+intListFileName) { write(intListFile.mkString("\n")); close }
-      new PrintWriter(path+jsonFileName) { write(jsonFileString); close }
-      new PrintWriter(path+invalidJsonFileName) { write(invalidJsonFileString); close }
+      new PrintWriter(path+stringFile) { write(string); close }
+      new PrintWriter(path+intListFile) { write(intList.mkString("\n")); close }
+      new PrintWriter(path+jsonFile) { write(json); close }
+      new PrintWriter(path+invalidJsonFile) { write(string); close }
     }
   }
 
@@ -85,19 +76,20 @@ class OriginSpec extends AnyFlatSpec with BeforeAndAfter  {
   }
 
   trait OriginFixture {
-    val stringFileName = "string.txt"
-    val stringFile: String = "Hello; world!"
-    val cleanedStringFile: String = "Hello world!"
-    val intListFileName = "int-list.txt"
-    val intListFile: List[Int] = List(1,2,3,4)
-    val cleanedIntListFile: List[Int] = List(2,4)
-    val jsonFileName = "json.txt"
-    val jsonFileString: String = "{ \"data\": [{\"id\":1,\"owner\":{\"first_name\":\"Carmelia\",\"last_name\":\"Tappin\"},\"email\":\"ltappin0@mail.ru\",\"pet\":{\"name\":\"Loreen\",\"pet_type\":\"Four-horned antelope\"}}]}"
-    val jsonFile: Json = parser.parse("{ \"data\": [{\"id\":1,\"owner\":{\"first_name\":\"Carmelia\",\"last_name\":\"Tappin\"},\"email\":\"ltappin0@mail.ru\",\"pet\":{\"name\":\"Loreen\",\"pet_type\":\"Four-horned antelope\"}}]}").getOrElse(Json.Null)
-    val cleanedJsonFile: Json = parser.parse("[{\"id\":1,\"owner\":{\"first_name\":\"Carmelia\",\"last_name\":\"Tappin\"},\"email\":\"ltappin0@mail.ru\",\"pet\":{\"name\":\"Loreen\",\"pet_type\":\"Four-horned antelope\"}}]").getOrElse(Json.Null)
-    val invalidJsonFileName = "invalid-json.txt"
-    val invalidJsonFileString: String = "invalid json"
-    val fakeFileName = "fakeFile.txt"
+    val stringFile = "test1.txt"
+    val string: String = "Hello; World!"
+    val cleanedString: String = "Hello World!"
+
+    val intListFile = "test2.txt"
+    val intList: List[Int] = List(1,2,3,4)
+    val cleanedIntList: List[Int] = List(2,4)
+
+    val jsonFile = "test3.txt"
+    val invalidJsonFile = "invalid-json.txt"
+    val json: String = "{\"data\":{\"first_name\":\"John\",\"last_name\":\"Smith\"}}"
+    val cleanedJson: Json = parser.parse("{\"first_name\":\"John\",\"last_name\":\"Smith\"}").getOrElse(Json.Null)
+
+    val invalidFile = "test0.txt"
     val path = "./src/test/resources/temp/"
   }
 

@@ -5,8 +5,8 @@ import io.circe.Json
 import origin.{IntListOrigin, JsonOrigin, Origin, StringOrigin}
 
 object Runner extends App {
-  lazy val conf = ConfigSource.default.load[ServiceConf]
-  val dataType = conf.toOption.get.dataType
+  lazy val conf = ConfigSource.default.loadOrThrow[ServiceConf]
+  val dataType = conf.dataType
 
   val runner = dataType match {
     case "String" => new Runner[String] {
