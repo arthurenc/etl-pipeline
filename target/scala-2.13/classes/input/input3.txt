@@ -1,5 +1,5 @@
-{ "data": [{"id":1,"owner":{"first_name":"Carmelia","last_name":"Tappin"},"email":"ltappin0@mail.ru","pet":{"name":"Loreen","type":"Four-horned antelope"}},
-{"id":2,"owner":{"first_name":"Brier","last_name":"Fagge"},"email":"lfagge1@shutterfly.com","pet":{"name":"Langsdon","type":"Large-eared bushbaby"}},
-{"id":3,"owner":{"first_name":"Eduino","last_name":"Chong"},"email":"bchong2@shareasale.com","pet":{"name":"Brod","type":"Barbet, crested"}},
-{"id":4,"owner":{"first_name":"Vanya","last_name":"Sterling"},"email":"tsterling3@springer.com","pet":{"name":"Tony","type":"Black vulture"}},
-{"id":5,"owner":{"first_name":"Gwenora","last_name":"Walling"},"email":"dwalling4@nationalgeographic.com","pet":{"name":"Danyette","type":"Bleu, blue-breasted cordon"}}]}
+{ "data": [{"id":1,"owner":{"first_name":"Carmelia","last_name":"Tappin"},"email":"ltappin0@mail.ru","pet":{"name":"Loreen","pet_type":"Four-horned antelope"}},
+{"id":2,"owner":{"first_name":"Brier","last_name":"Fagge"},"email":"lfagge1@shutterfly.com","pet":{"name":"Langsdon","pet_type":"Large-eared bushbaby"}},
+{"id":3,"owner":{"first_name":"Eduino","last_name":"Chong"},"email":"bchong2@shareasale.com","pet":{"name":"Brod","pet_type":"Barbet, crested"}},
+{"id":4,"owner":{"first_name":"Vanya","last_name":"Sterling"},"email":"tsterling3@springer.com","pet":{"name":"Tony","pet_type":"Black vulture"}},
+{"id":5,"owner":{"first_name":"Gwenora","last_name":"Walling"},"email":"dwalling4@nationalgeographic.com","pet":{"name":"Danyette","pet_type":"Bleu, blue-breasted cordon"}}]}
