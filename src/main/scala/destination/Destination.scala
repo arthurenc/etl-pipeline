@@ -6,9 +6,9 @@ import io.circe.{Decoder, Encoder, Json}
 import java.io.PrintWriter
 
 trait Destination[T] {
+  def transform(input: T): T
   def save(filePath: String, data: T): Unit =
     new PrintWriter(filePath) { write(data.toString); close }
-  def transform(input: T): T
 }
 
 case object StringDestination extends Destination[String] {
