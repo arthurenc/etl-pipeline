@@ -6,14 +6,14 @@ import java.io.FileNotFoundException
 import scala.io.{BufferedSource, Source}
 
 trait Origin[T] {
-  def extract(path: String): T
-  def clean(input: T): T
   def openFile(path: String): BufferedSource =
     try {
       Source.fromFile(path)
     } catch {
       case e: FileNotFoundException => throw e
     }
+  def extract(path: String): T
+  def clean(input: T): T
 }
 
 case object StringOrigin extends Origin[String] {
