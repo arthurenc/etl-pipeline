@@ -1,8 +1,10 @@
 package destination
 
 import io.circe.syntax._
-import io.circe.{Decoder, Encoder, Json}
+import io.circe.Json
+import PetOwner.config
 
+import io.circe.generic.extras.auto._
 import java.io.PrintWriter
 
 trait Destination[T] {
@@ -21,17 +23,8 @@ case object IntListDestination extends Destination[List[Int]] {
 
 case object JsonDestination extends Destination[Json] {
   override def transform(input: Json): Json = {
-    implicit val decodeOwner: Decoder[Owner] = Decoder.forProduct2("first_name", "last_name")(Owner.apply)
-    implicit val encodeOwner: Encoder[Owner] = Encoder.forProduct2("first_name", "last_name")(owner => (owner.first_name, owner.last_name))
-    implicit val decodePet: Decoder[Pet] = Decoder.forProduct2("name", "pet_type")(Pet.apply)
-    implicit val encodePet: Encoder[Pet] = Encoder.forProduct2("name", "pet_type")(pet => (pet.name, pet.pet_type))
-    implicit val decodePetOwner: Decoder[PetOwner] = Decoder.forProduct4("id", "owner", "email", "pet")(PetOwner.apply)
-    implicit val encodePetOwner: Encoder[PetOwner] = Encoder.forProduct4("id", "owner", "email", "pet")(petOwner => (petOwner.id, petOwner.owner, petOwner.email, petOwner.pet))
-
-    val decodedJson = input.as[PetOwner].map(
-      petOwner => petOwner.copy(
-        pet = petOwner.pet.copy(pet_type = petOwner.pet.pet_type.replace(" ", "-"))
-      )
+    val decodedJson = input.as[PetOwner].map(petOwner =>
+      petOwner.copy(pet = petOwner.pet.copy(pet_type = petOwner.pet.pet_type.replace(" ", "-")))
     )
     decodedJson match {
       case Right(decodedJson) => decodedJson.asJson
