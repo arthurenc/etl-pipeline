@@ -1,46 +1,27 @@
-import destination.{Destination, IntListDestination, JsonDestination, StringDestination}
-import pureconfig._
-import pureconfig.generic.auto._
+import Config.{IntListType, JsonType, StringType}
+import destination.{IntListDestination, JsonDestination, StringDestination}
 import io.circe.Json
-import origin.{IntListOrigin, JsonOrigin, Origin, StringOrigin}
+import origin.{IntListOrigin, JsonOrigin, StringOrigin}
 
 object Runner extends App {
-  lazy val conf = ConfigSource.default.loadOrThrow[ServiceConf]
-  val dataType = conf.dataType
+  Config.configLoader() match {
+    case Right(config) =>
+      val runner = config.dataType match {
+        case StringType => new EtlPipeline[String] {
+          val origin = StringOrigin
+          val destination = StringDestination
+        }
+        case IntListType => new EtlPipeline[List[Int]] {
+          val origin = IntListOrigin
+          val destination = IntListDestination
+        }
+        case JsonType => new EtlPipeline[Json] {
+          val origin = JsonOrigin
+          val destination = JsonDestination
+        }
+      }
+      runner.run(config)
 
-  val runner = dataType match {
-    case "String" => new Runner[String] {
-      val origin = StringOrigin
-      val destination = StringDestination
-    }
-    case "IntList" => new Runner[List[Int]] {
-      val origin = IntListOrigin
-      val destination = IntListDestination
-    }
-    case "Json" => new Runner[Json] {
-      val origin = JsonOrigin
-      val destination = JsonDestination
-    }
-  }
-  runner.run()
-}
-
-trait Runner[T] {
-  val origin: Origin[T]
-  val destination: Destination[T]
-
-  lazy val conf = ConfigSource.default.load[ServiceConf]
-  val fileName = conf.toOption.get.fileName
-  val filePath = conf.toOption.get.filePath
-
-  val path = s"$filePath/$fileName"
-
-  def run(): Unit = {
-    val input = origin.extract(path)
-    val cleaned = origin.clean(input)
-    val transformed = destination.transform(cleaned)
-    destination.save(fileName, transformed)
+    case Left(err) => println(err)
   }
 }
-
-case class ServiceConf(fileName: String, filePath: String, dataType: String)
