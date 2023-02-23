@@ -1,4 +1,12 @@
+# Misc
+.DS_Store
+
+# Scala
+target
+
 # IDE and Build Tools
 .idea
+*.iml
 .bsp
-target
+.direnv
+.envrc
