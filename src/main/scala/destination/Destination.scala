@@ -9,8 +9,11 @@ import java.io.PrintWriter
 
 trait Destination[T] {
   def transform(input: T): T
-  def save(filePath: String, data: T): Unit =
-    new PrintWriter(filePath) { write(data.toString); close }
+
+  def save(outputPath: String, data: T): Unit =
+    new PrintWriter(outputPath) {
+      write(data.toString); close
+    }
 }
 
 case object StringDestination extends Destination[String] {

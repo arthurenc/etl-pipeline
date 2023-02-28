@@ -11,9 +11,8 @@ import scala.reflect.io.{Directory, File}
 class DestinationSpec extends AnyFlatSpec with BeforeAndAfter {
 
   "Destination.Save" should "save a file to a directory" in new DestinationFixture {
-    val filePath = path+"/"+stringFile
-    StringDestination.save(filePath, string)
-    assert(File(filePath).exists)
+    StringDestination.save(outputPath+stringFile, string)
+    assert(File(outputPath).exists)
   }
 
   "StringDestination.Transform" should "convert a string to lowercase" in new DestinationFixture {
@@ -33,14 +32,14 @@ class DestinationSpec extends AnyFlatSpec with BeforeAndAfter {
 
   before {
     new DestinationFixture {
-      val dirPath: Path = Paths.get(path)
+      val dirPath: Path = Paths.get(outputPath)
       if(!(Files.exists(dirPath) && Files.isDirectory(dirPath))) Files.createDirectory(dirPath)
     }
   }
 
   after {
     new DestinationFixture {
-      val directory = Directory(path+"/")
+      val directory = Directory(outputPath)
       directory.deleteRecursively()
     }
   }
@@ -56,6 +55,6 @@ class DestinationSpec extends AnyFlatSpec with BeforeAndAfter {
     val json: Json = parser.parse("{\"id\":1,\"owner\":{\"first_name\":\"John\",\"last_name\":\"Smith\"},\"email\":\"johnsmith@mail.ru\",\"pet\":{\"name\":\"Luna\",\"pet_type\":\"Domestic Cat\"}}").getOrElse(Json.Null)
     val transformedJson: Json = parser.parse("{\"id\":1,\"owner\":{\"first_name\":\"John\",\"last_name\":\"Smith\"},\"email\":\"johnsmith@mail.ru\",\"pet\":{\"name\":\"Luna\",\"pet_type\":\"Domestic-Cat\"}}").getOrElse(Json.Null)
 
-    val path = "./src/test/resources/temp/"
+    val outputPath = "./src/test/resources/temp/"
   }
 }
