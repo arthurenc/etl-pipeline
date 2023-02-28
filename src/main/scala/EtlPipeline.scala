@@ -5,10 +5,10 @@ trait EtlPipeline[T] {
   val origin: Origin[T]
   val destination: Destination[T]
 
-  def run(config: ServiceConfig): Unit = {
-    val input = origin.extract(config.path)
+  def run(config: EtlConfig): Unit = {
+    val input = origin.extract(config.inputPath)
     val cleaned = origin.clean(input)
     val transformed = destination.transform(cleaned)
-    destination.save(config.path, transformed)
+    destination.save(config.outputPath, transformed)
   }
 }

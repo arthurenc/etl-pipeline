@@ -1,22 +1,18 @@
 import Config.DataType
 import pureconfig.ConfigSource
-import pureconfig.error.ConfigReaderFailures
 import pureconfig.generic.auto._
 
-case class ServiceConfig(
-  fileName: String,
-  path: String,
+case class EtlConfig(
+  inputPath: String,
+  outputPath: String,
   dataType: DataType
 )
 
 object Config {
+  def load():EtlConfig = ConfigSource.default.loadOrThrow[EtlConfig]
+
   sealed trait DataType
   case object StringType extends DataType
   case object IntListType extends DataType
   case object JsonType extends DataType
-
-  def configLoader(): Either[ConfigReaderFailures, ServiceConfig] = ConfigSource.default.load[ServiceConfig]match {
-    case Left(err) => Left(err)
-    case Right(config) => Right(config)
-  }
 }
