@@ -53,8 +53,8 @@ class DestinationSpec extends AnyFlatSpec with BeforeAndAfter {
     val intList: List[Int] = List(1,2,3,4)
     val transformedIntList: List[Int] = List(4,3,2,1)
 
-    val json: Json = parser.parse("{\"id\":1,\"owner\":{\"first_name\":\"John\",\"last_name\":\"Smith\"},\"email\":\"johnsmith@mail.ru\",\"pet\":{\"name\":\"Luna\",\"pet_type\":\"Domestic Cat\"}}").getOrElse(Json.Null)
-    val transformedJson: Json = parser.parse("{\"id\":1,\"owner\":{\"first_name\":\"John\",\"last_name\":\"Smith\"},\"email\":\"johnsmith@mail.ru\",\"pet\":{\"name\":\"Luna\",\"pet_type\":\"Domestic-Cat\"}}").getOrElse(Json.Null)
+    val json: Json = parser.parse("[{\"id\":1,\"owner\":{\"first_name\":\"John\",\"last_name\":\"Smith\"},\"email\":\"johnsmith@mail.ru\",\"pet\":{\"name\":\"Luna\",\"pet_type\":\"Domestic Cat\"}}]").getOrElse(Json.Null)
+    val transformedJson: Json = parser.parse("[{\"id\":1,\"owner\":{\"first_name\":\"John\",\"last_name\":\"Smith\"},\"email\":\"johnsmith@mail.ru\",\"pet\":{\"name\":\"Luna\",\"pet_type\":\"Domestic-Cat\"}}]").getOrElse(Json.Null)
 
     val path = "./src/test/resources/temp/"
   }
