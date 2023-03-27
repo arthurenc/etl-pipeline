@@ -2,8 +2,6 @@ package destination
 
 import io.circe.generic.extras.Configuration
 import PetOwner.{ Owner, Pet}
-import io.circe.Decoder
-import io.circe.generic.semiauto.deriveDecoder
 
 case class PetOwner(
   id: Int,

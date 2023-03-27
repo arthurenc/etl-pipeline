@@ -1,10 +1,10 @@
 package destination
 
 import io.circe.syntax._
-import io.circe.{Decoder, Json}
+import io.circe.Json
+import io.circe.parser.decode
 import PetOwner._
 import io.circe.generic.extras.auto._
-import io.circe.generic.semiauto.deriveDecoder
 
 import java.io.PrintWriter
 
@@ -24,12 +24,11 @@ case object IntListDestination extends Destination[List[Int]] {
 
 case object JsonDestination extends Destination[Json] {
   override def transform(input: Json): Json = {
-    val decodedJson = input.as[PetOwner].map(petOwner =>
-      petOwner.copy(pet = petOwner.pet.copy(pet_type = petOwner.pet.pet_type.replace(" ", "-")))
+    input.as[List[PetOwner]].fold(
+      decodingFailure => throw decodingFailure,
+      petOwners => petOwners.map { case petOwner@PetOwner(_, _, _, pet) =>
+        petOwner.copy(pet = pet.copy(pet_type = pet.pet_type.replace(" ", "-")))
+      }.asJson
     )
-    decodedJson match {
-      case Right(decodedJson) => decodedJson.asJson
-      case Left(decodingFailure) => throw decodingFailure
-    }
   }
 }
