@@ -1,15 +1,16 @@
 package destination
 
 import io.circe.syntax._
-import io.circe.Json
-import PetOwner.config
-
+import io.circe.{Decoder, Json}
+import PetOwner._
 import io.circe.generic.extras.auto._
+import io.circe.generic.semiauto.deriveDecoder
+
 import java.io.PrintWriter
 
-trait Destination[T] {
-  def transform(input: T): T
-  def save(filePath: String, data: T): Unit =
+trait Destination[A] {
+  def transform(input: A): A
+  def save(filePath: String, data: A): Unit =
     new PrintWriter(filePath) { write(data.toString); close }
 }
 

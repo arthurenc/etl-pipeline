@@ -5,15 +5,15 @@ import io.circe.{HCursor, Json, ParsingFailure, parser}
 import java.io.FileNotFoundException
 import scala.io.{BufferedSource, Source}
 
-trait Origin[T] {
+trait Origin[A] {
   def openFile(path: String): BufferedSource =
     try {
       Source.fromFile(path)
     } catch {
       case e: FileNotFoundException => throw e
     }
-  def extract(path: String): T
-  def clean(input: T): T
+  def extract(path: String): A
+  def clean(input: A): A
 }
 
 case object StringOrigin extends Origin[String] {

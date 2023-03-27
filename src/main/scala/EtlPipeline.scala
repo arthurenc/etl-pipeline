@@ -1,14 +1,14 @@
 import destination.Destination
 import origin.Origin
 
-trait EtlPipeline[T] {
-  val origin: Origin[T]
-  val destination: Destination[T]
+trait EtlPipeline[A] {
+  val origin: Origin[A]
+  val destination: Destination[A]
 
-  def run(config: ServiceConfig): Unit = {
-    val input = origin.extract(config.path)
+  def run(config: Config): Unit = {
+    val input = origin.extract(config.filePath+"input/"+config.fileName)
     val cleaned = origin.clean(input)
     val transformed = destination.transform(cleaned)
-    destination.save(config.path, transformed)
+    destination.save(config.filePath+"output/"+config.fileName, transformed)
   }
 }
